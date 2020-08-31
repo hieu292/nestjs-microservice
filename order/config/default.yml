@@ -1,0 +1,15 @@
+app:
+  name: 'Order API'
+  description: 'API for Order Service'
+  version: '1.0'
+  apiDocs: '/apidocs'
+server:
+  port: 3000
+db:
+  type: 'postgres'
+  port: 5432
+  database: 'order'
+services:
+  apiPayment:
+    name: apiPayment
+    spec: config/swagger-services/api-payment.json

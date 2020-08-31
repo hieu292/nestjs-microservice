@@ -1,0 +1,5 @@
+db:
+  synchronize: false
+services:
+  apiPayment:
+    host: https://payment.test.com

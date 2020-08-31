@@ -1,0 +1,3 @@
+server:
+  origin: https://payment.test.com
+  port: 3000

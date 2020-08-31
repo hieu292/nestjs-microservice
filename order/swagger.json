@@ -1,0 +1,234 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Order API",
+    "description": "API for Order Service",
+    "version": "1.0",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "securitySchemes": {
+      "bearer": {
+        "type": "apiKey",
+        "name": "access-token",
+        "in": "header"
+      }
+    },
+    "schemas": {
+      "OrderDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "example": 1
+          },
+          "productId": {
+            "type": "number",
+            "example": 1
+          },
+          "amount": {
+            "type": "number",
+            "example": 1
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "CREATED",
+              "CONFIRMED",
+              "CANCELED",
+              "DELIVERED"
+            ]
+          },
+          "userId": {
+            "type": "number",
+            "example": 1
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "productId",
+          "amount",
+          "status",
+          "userId",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
+      "CreateOrderDto": {
+        "type": "object",
+        "properties": {
+          "productId": {
+            "type": "number",
+            "example": 1
+          },
+          "amount": {
+            "type": "number",
+            "example": 1
+          }
+        },
+        "required": [
+          "productId",
+          "amount"
+        ]
+      }
+    }
+  },
+  "paths": {
+    "/orders": {
+      "get": {
+        "operationId": "getOrders",
+        "summary": "",
+        "parameters": [
+          {
+            "name": "status",
+            "required": true,
+            "in": "query",
+            "enum": [
+              "CREATED",
+              "CONFIRMED",
+              "CANCELED",
+              "DELIVERED"
+            ],
+            "schema": {
+              "enum": [
+                "CREATED",
+                "CONFIRMED",
+                "CANCELED",
+                "DELIVERED"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/OrderDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "post": {
+        "operationId": "createOrder",
+        "summary": "",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateOrderDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/orders/{id}": {
+      "get": {
+        "operationId": "getOrder",
+        "summary": "",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/orders/{id}/cancel": {
+      "patch": {
+        "operationId": "cancelOrder",
+        "summary": "",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    }
+  }
+}

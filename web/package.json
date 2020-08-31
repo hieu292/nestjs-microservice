@@ -1,0 +1,57 @@
+{
+  "name": "web-rt",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@reduxjs/toolkit": "^1.4.0",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.5.0",
+    "@testing-library/user-event": "^7.2.1",
+    "@types/jest": "^24.9.1",
+    "@types/node": "^12.12.54",
+    "@types/react": "^16.9.45",
+    "@types/react-dom": "^16.9.8",
+    "@types/react-redux": "^7.1.9",
+    "axios": "^0.19.2",
+    "bootstrap": "^4.5.2",
+    "history": "^5.0.0",
+    "lodash": "^4.17.19",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-json-view": "^1.19.1",
+    "react-redux": "^7.2.1",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "3.4.1",
+    "typescript": "^3.8.3"
+  },
+  "scripts": {
+    "start": "PORT=4000 react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "format": "pretty-quick --staged --pattern \"src/**/*\"",
+    "format:all": "prettier --write \"src\""
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.159",
+    "@types/react-router-dom": "^5.1.5",
+    "husky": "^4.2.5",
+    "prettier": "^2.0.5",
+    "pretty-quick": "^2.0.1"
+  }
+}

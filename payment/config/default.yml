@@ -1,0 +1,7 @@
+app:
+  name: 'Payment API'
+  description: 'API for Payment Service'
+  version: '1.0'
+  apiDocs: '/apidocs'
+server:
+  port: 3000

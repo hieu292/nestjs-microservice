@@ -1,0 +1,98 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Payment API",
+    "description": "API for Payment Service",
+    "version": "1.0",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "securitySchemes": {
+      "bearer": {
+        "type": "apiKey",
+        "name": "access-token",
+        "in": "header"
+      }
+    },
+    "schemas": {
+      "CreatePurchaseDto": {
+        "type": "object",
+        "properties": {
+          "orderId": {
+            "type": "number",
+            "example": 1
+          },
+          "productId": {
+            "type": "number",
+            "example": 1
+          },
+          "amount": {
+            "type": "number",
+            "example": 1
+          }
+        },
+        "required": [
+          "orderId",
+          "productId",
+          "amount"
+        ]
+      },
+      "PurchaseDto": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "DECLINED",
+              "CONFIRMED"
+            ]
+          }
+        },
+        "required": [
+          "status"
+        ]
+      }
+    }
+  },
+  "paths": {
+    "/payments": {
+      "post": {
+        "operationId": "purchase",
+        "summary": "",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePurchaseDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PurchaseDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "payments"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    }
+  }
+}

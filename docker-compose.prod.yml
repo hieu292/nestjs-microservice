@@ -1,0 +1,72 @@
+version: '3.7'
+services:
+  orderDb:
+    image: mdillon/postgis
+    environment:
+      - POSTGRESQL_USERNAME=postgres
+      - POSTGRESQL_PASSWORD=postgres
+      - POSTGRES_DB=order
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./docker/postgresql/data:/var/lib/postgresql/data
+      - ./docker/postgresql/postgresql.conf:/etc/postgresql.conf
+    command: postgres -c config_file=/etc/postgresql.conf
+  payment:
+    build:
+      context: ./payment
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - POSTGRES_HOSTNAME=orderDb
+      - POSTGRES_PORT=5432
+      - POSTGRES_DB_NAME=order
+      - POSTGRES_USERNAME=postgres
+      - POSTGRES_PASSWORD=postgres
+      - PAYMENT_HOST_API=payment
+    volumes:
+      - ./payment:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - 3000:3000
+      - 9229:9229
+    tty: true
+    command: node --inspect=0.0.0.0:9229 dist/main.js
+  order:
+    build:
+      context: ./order
+#      target: development
+      target: production
+    depends_on:
+      - orderDb
+      - payment
+    links:
+      - orderDb
+      - payment
+    working_dir: /usr/src/app
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - POSTGRES_HOSTNAME=orderDb
+      - POSTGRES_PORT=5432
+      - POSTGRES_DB_NAME=order
+      - POSTGRES_USERNAME=postgres
+      - POSTGRES_PASSWORD=postgres
+      - PAYMENT_HOST_API=http://payment:3000
+    volumes:
+      - ./order:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - 3001:3000
+      - 2992:9229
+    tty: true
+    command: node --inspect=0.0.0.0:9229 dist/main.js
+  web:
+    build:
+      context: ./web
+    depends_on:
+      - order
+    links:
+      - order
+    ports:
+      - 3002:3000
